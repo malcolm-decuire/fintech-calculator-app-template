@@ -1,1 +1,0 @@
-export { CrudItemForm } from './crudItemForm.component'

@@ -1,1 +1,0 @@
-export { CrudItem } from './crudItem.component'
