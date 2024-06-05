@@ -1,113 +1,189 @@
-import Image from "next/image";
+'use client'
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import { Box, Typography } from "@mui/material";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import Slider from "@/components/Slider";
+import Chart from "@/components/Chart";
 
-export default function Home() {
+interface IFormValues {
+  location: string;
+  monthlyGrossIncome: number;
+  monthlyDepts: number;
+  monthlySavings: number;
+  monthlyExpenses: number;
+  rent: number;
+}
+
+const marks = [
+  {
+    value: 20,
+    label: '20%',
+  },
+  {
+    value: 40,
+    label: '40%',
+  },
+];
+
+const Home = () => {
+  const [showAll, setShowAll] = useState<boolean>(false);
+  const {
+    control,
+    handleSubmit,
+    watch
+  } = useForm<IFormValues>({
+    defaultValues: {
+      location: 'Los Angeles, CA',
+      monthlyGrossIncome: 5000,
+      monthlyDepts: 2000,
+      monthlySavings: 500,
+      monthlyExpenses: 100,
+      rent: 30
+    },
+    mode: 'onTouched',
+  });
+
+  const onSubmit = (value: IFormValues) => {
+    console.log(value);
+  };
+
+
+  const values = watch();
+  const rentAmount = values.monthlyGrossIncome * (values.rent / 100);
+  const amountLeft = values.monthlyGrossIncome - values.monthlyDepts - values.monthlySavings - values.monthlyExpenses - values.monthlyGrossIncome * 0.3;
+  const amountLeftPercent = amountLeft / values.monthlyGrossIncome;
+  const renderRentAmount = rentAmount.toFixed(2);
+  console.log(amountLeft)
+  const data = [
+    {
+      name: 'Amount left',
+      y: amountLeftPercent
+    },
+    {
+      name: 'Monthly Savings',
+      y: values.monthlySavings / values.monthlyGrossIncome,
+    },
+    {
+      name: 'Monthly Expenses',
+      y: values.monthlyExpenses / values.monthlyGrossIncome,
+    },
+    {
+      name: 'Monthly Depts',
+      y: values.monthlyDepts / values.monthlyGrossIncome,
+    },
+    {
+      name: 'Rent',
+      y: (rentAmount) / values.monthlyGrossIncome,
+    },
+  ];
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <Box className="flex max-w-[860px] w-full mx-auto rounded-[25px] overflow-hidden">
+      <Box className="w-2/3 p-7 pt-50 flex flex-col gap-8">
+        <Typography className="text-center font-medium" variant="h2">How much rent can I afford?</Typography>
+        <Controller
+          control={control}
+          rules={{
+            required: 'Must be completed',
+          }}
+          render={({ field, fieldState: { error } }) => (
+            <Input {...field} placeholder="Location" error={error} autoFocus={true} />
+          )}
+          name="location"
         />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        <Box className="flex items-center justify-between gap-8">
+          <Controller
+            control={control}
+            rules={{
+              required: 'Must be completed',
+            }}
+            render={({ field, fieldState: { error } }) => (
+              <Input {...field} type="number" className="w-1/2" placeholder="Monthly Gross Income" error={error} />
+            )}
+            name="monthlyGrossIncome"
+          />
+          <Controller
+            control={control}
+            rules={{
+              required: 'Must be completed',
+            }}
+            render={({ field, fieldState: { error } }) => (
+              <Input {...field} type="number" className="w-1/2" placeholder="Monthly depts" error={error} />
+            )}
+            name="monthlyDepts"
+          />
+        </Box>
+        {showAll && (
+          <Box className="flex items-center justify-between gap-8">
+            <Controller
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <Input {...field} type="number" className="w-1/2" placeholder="Monthly Savings" error={error} />
+              )}
+              name="monthlySavings"
+            />
+            <Controller
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <Input {...field} type="number" className="w-1/2" placeholder="Monthly Expenses" error={error} />
+              )}
+              name="monthlyExpenses"
+            />
+          </Box>
+        )}
+        <Box className="flex w-full justify-end -mb-8">
+          <Button
+            onClick={() => setShowAll(!showAll)}
+            className="bg-grey-400 max-w-[160px] text-black-500"
+            endIcon={
+              <KeyboardArrowDownIcon
+                className={`w-7 ${showAll ? 'transform rotate-180' : ''}`}
+              />
+            }
+          >More Options</Button>
+        </Box>
+        <Button onClick={handleSubmit(onSubmit)} className="max-w-[160px] mx-auto">Calculate Rent</Button>
+        <Typography className="text-center text-black text-sm" variant="body1">
+          You can afford a ${renderRentAmount} rent in Los Angeles, CA while spending 30% of your monthly income.
+        </Typography>
+        <Typography className="text-center text-black text-sm" variant="body1">
+          You will have ${amountLeft.toFixed(2)} left to spend per month.
+        </Typography>
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <Slider
+              onChange={(...args) => {
+                field.onChange(...args);
+                field.onBlur();
+              }}
+              value={field.value}
+              shiftStep={30}
+              step={5}
+              min={20}
+              max={40}
+              marks={marks}
+            />
+          )}
+          name="rent"
+        />
+ 
+      </Box>
+      <Box className="w-1/3 items-start justify-center flex bg-gradient-to-r from-blue-100 to-blue-200">
+        <Box className="w-[240px]">
+          <Chart  
+            data={data}
+          />
+          <Typography className="p-[20px] text-center text-2xl" variant="body1">
+            You can afford ${amountLeft < 0 ? '0' : renderRentAmount}/<span className="text-sm">month.</span>
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 }
+
+export default Home;

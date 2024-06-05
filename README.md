@@ -26,6 +26,9 @@ Because our `.env` contains a real keys to services, we don't add it to the `git
 - yarn
 - yarn dev
 
+## Starting via docker
+- docker-compose up
+
 # Development
 
 ## Project structure
