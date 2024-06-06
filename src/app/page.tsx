@@ -6,7 +6,10 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Slider from "@/components/Slider";
-import Chart from "@/components/Chart";
+import dynamic from 'next/dynamic';
+
+const Chart = dynamic(() => import('@/components/Chart'), { ssr: false });
+
 
 interface IFormValues {
   location: string;
@@ -56,7 +59,7 @@ const Home = () => {
   const amountLeft = values.monthlyGrossIncome - values.monthlyDepts - values.monthlySavings - values.monthlyExpenses - values.monthlyGrossIncome * 0.3;
   const amountLeftPercent = amountLeft / values.monthlyGrossIncome;
   const renderRentAmount = rentAmount.toFixed(2);
-  console.log(amountLeft)
+
   const data = [
     {
       name: 'Amount left',
