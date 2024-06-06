@@ -14,7 +14,7 @@ const Chart = dynamic(() => import('@/components/Chart'), { ssr: false });
 interface IFormValues {
   location: string;
   monthlyGrossIncome: number;
-  monthlyDepts: number;
+  monthlyDebts: number;
   monthlySavings: number;
   monthlyExpenses: number;
   rent: number;
@@ -41,7 +41,7 @@ const Home = () => {
     defaultValues: {
       location: 'Los Angeles, CA',
       monthlyGrossIncome: 5000,
-      monthlyDepts: 2000,
+      monthlyDebts: 2000,
       monthlySavings: 500,
       monthlyExpenses: 100,
       rent: 30
@@ -56,7 +56,7 @@ const Home = () => {
 
   const values = watch();
   const rentAmount = values.monthlyGrossIncome * (values.rent / 100);
-  const amountLeft = values.monthlyGrossIncome - values.monthlyDepts - values.monthlySavings - values.monthlyExpenses - values.monthlyGrossIncome * 0.3;
+  const amountLeft = values.monthlyGrossIncome - values.monthlyDebts - values.monthlySavings - values.monthlyExpenses - values.monthlyGrossIncome * 0.3;
   const amountLeftPercent = amountLeft / values.monthlyGrossIncome;
   const renderRentAmount = rentAmount.toFixed(2);
 
@@ -74,8 +74,8 @@ const Home = () => {
       y: values.monthlyExpenses / values.monthlyGrossIncome,
     },
     {
-      name: 'Monthly Depts',
-      y: values.monthlyDepts / values.monthlyGrossIncome,
+      name: 'Monthly Debts',
+      y: values.monthlyDebts / values.monthlyGrossIncome,
     },
     {
       name: 'Rent',
@@ -114,9 +114,9 @@ const Home = () => {
               required: 'Must be completed',
             }}
             render={({ field, fieldState: { error } }) => (
-              <Input {...field} type="number" className="w-1/2" placeholder="Monthly depts" error={error} />
+              <Input {...field} type="number" className="w-1/2" placeholder="Monthly debts" error={error} />
             )}
-            name="monthlyDepts"
+            name="monthlyDebts"
           />
         </Box>
         {showAll && (
