@@ -87,7 +87,7 @@ const Home = () => {
     <Box className="flex max-w-[860px] w-full mx-auto rounded-[25px] overflow-hidden">
       <Box className="w-2/3 p-7 pt-50 flex flex-col gap-8">
         <Typography className="text-center font-medium" variant="h2">How much rent can I afford?</Typography>
-        <Controller
+        {/* <Controller
           control={control}
           rules={{
             required: 'Must be completed',
@@ -96,7 +96,7 @@ const Home = () => {
             <Input {...field} placeholder="Location" error={error} autoFocus={true} />
           )}
           name="location"
-        />
+        /> */}
         <Box className="flex items-center justify-between gap-8">
           <Controller
             control={control}
@@ -140,7 +140,7 @@ const Home = () => {
         <Box className="flex w-full justify-end -mb-8">
           <Button
             onClick={() => setShowAll(!showAll)}
-            className="bg-grey-400 max-w-[160px] text-black-500"
+            className="bg-grey-400 max-w-[160px] !text-black-500"
             endIcon={
               <KeyboardArrowDownIcon
                 className={`w-7 ${showAll ? 'transform rotate-180' : ''}`}
