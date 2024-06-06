@@ -150,7 +150,7 @@ const Home = () => {
         </Box>
         <Button onClick={handleSubmit(onSubmit)} className="max-w-[160px] mx-auto">Calculate Rent</Button>
         <Typography className="text-center text-black text-sm" variant="body1">
-          You can afford a ${renderRentAmount} rent in Los Angeles, CA while spending 30% of your monthly income.
+          You can afford a ${renderRentAmount} rent in the US while spending {values.rent}% of your monthly income.
         </Typography>
         <Typography className="text-center text-black text-sm" variant="body1">
           You will have ${amountLeft.toFixed(2)} left to spend per month.
