@@ -23,6 +23,9 @@ const createTheme = (): ThemeOptions =>
       error: {
         500: '#ee294c',
       },
+      secondary: {
+        main: '#e3e2e2'
+      }
     },
     typography: {
       h1: {

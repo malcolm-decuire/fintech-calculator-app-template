@@ -37,6 +37,12 @@ const config: Config = {
           400: '#f7f7f7',
           500: '#1b1b1f',
         },
+        yellow: {
+          500: '#ffcc02'
+        }
+      },
+      width: {
+        'calc-1/2-4': 'calc(50% - 12px)',
       },
       spacing: {
         '1': '6px',
