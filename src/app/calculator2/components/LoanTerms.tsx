@@ -87,7 +87,7 @@ const LoanTerms = ({ data, control }: ILoanTermsProps) => {
         name="downPaymentPercentage"
       />
       <Box className="w-full md:w-calc-1/2-4">
-        <Input className="w-full" placeholder="Downpayment ($)" value={`${downPaymentAmount}$`} />
+        <Input className="w-full" placeholder="Downpayment ($)" value={`$${downPaymentAmount}`} />
       </Box>
       <Box className="w-full md:w-calc-1/2-4">
         <Input className="w-full" placeholder="Mortage" value={mortgage} />

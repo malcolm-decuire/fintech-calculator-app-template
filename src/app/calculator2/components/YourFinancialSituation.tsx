@@ -89,7 +89,7 @@ const YourFinancialSituation = ({ control, data }: IYourFinancialSituationProps)
         name="yourCurrentSavings"
       />
       <Box className="w-full md:w-calc-1/2-4">
-        <Input className="w-full" placeholder="Monthly Gross Income" value={`${data.monthlyGrossIncome}$`} />
+        <Input className="w-full" placeholder="Monthly Gross Income" value={`$${data.monthlyGrossIncome}`} />
       </Box>
     </Box>
   )

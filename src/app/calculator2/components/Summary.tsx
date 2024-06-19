@@ -14,8 +14,25 @@ import autoTable from 'jspdf-autotable'
 import GetAppIcon from '@mui/icons-material/GetApp';
 import Button from '@/components/Button';
 import { pv, pmt } from 'financial'
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import CancelIcon from '@mui/icons-material/Cancel';
 
 const doc = new jsPDF()
+
+const formatAmount = (value: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
+
+const IconYesNo = ({ value }: { value: string }) => {
+
+  // if (value === 'YES') {
+  //   return <CheckCircleIcon className="text-green-500 float-right" />
+  // }
+
+  // if (value === 'NO') {
+  //   return <CancelIcon className="text-red-500 float-right" />
+  // }
+
+  return value
+}
 
 const Summary = ({ data }: { data: Record<any, any> }) => {
   const monthlyGrossIncomeValue2 = data.monthlyGrossIncome + (data.rentRevenueAdjustmentPercentage / 100) * data.rentSum;
@@ -50,13 +67,13 @@ const Summary = ({ data }: { data: Record<any, any> }) => {
     },
     {
       name: 'Monthly Gross Income',
-      value: `${data.monthlyGrossIncome}$`,
-      value2: `${monthlyGrossIncomeValue2}$`
+      value: data.monthlyGrossIncome,
+      value2: monthlyGrossIncomeValue2
     },
     {
       name: 'Monthly Debt Obligations (Non-Mortgage)',
-      value: `${data.totalMonthlyDebtPayments}$`,
-      value2: `${data.totalMonthlyDebtPayments}$`,
+      value: data.totalMonthlyDebtPayments,
+      value2: data.totalMonthlyDebtPayments
     },
     {
       name: 'Front-End Debt-To-Income Ratio (Mortgage Only)',
@@ -76,8 +93,8 @@ const Summary = ({ data }: { data: Record<any, any> }) => {
     },
     {
       name: 'Maximium $ Available for Other Debt Payment',
-      value: `${Number((maxAvaliableForOtherDebtPayment / 100) * data.monthlyGrossIncome).toFixed(2)}$`,
-      value2: `${Number((doubleMaxAvailableForOtherDebtPayment / 100) * monthlyGrossIncomeValue2).toFixed(2)}$`,
+      value: (maxAvaliableForOtherDebtPayment / 100) * data.monthlyGrossIncome,
+      value2: (doubleMaxAvailableForOtherDebtPayment / 100) * monthlyGrossIncomeValue2,
     },
     {
       name: 'Backend-End Debt-To-Income Ratio (All Debts)',
@@ -92,43 +109,43 @@ const Summary = ({ data }: { data: Record<any, any> }) => {
     },
     {
       name: 'Maximium Monthly Mortgage Amount',
-      value: `${Number(singleMaximumMonthlyMortageAmount).toFixed(2)}$`,
-      value2: `${Number(doubleMaximumMonthlyMortageAmount).toFixed(2)}$`,
+      value: singleMaximumMonthlyMortageAmount,
+      value2: doubleMaximumMonthlyMortageAmount,
     },
     {
       name: 'Maximum Total Mortgage Amount',
-      value: `${Number(singleMaximumMortageAmount).toFixed(2)}$`,
-      value2: `${Number(doubleMaximumMortageAmount).toFixed(2)}$`,
+      value: singleMaximumMortageAmount,
+      value2: doubleMaximumMortageAmount,
     },
     {
       name: '0.035 Downpayment',
-      value: `${Number(singleDownPayment035).toFixed(2)}$`,
-      value2: `${Number(doubleDownPayment035).toFixed(2)}$`,
+      value: singleDownPayment035,
+      value2: doubleDownPayment035,
     },
     {
       name: 'Max Home Value You Can Be Pre-Approved For',
-      value: `${Number(singleMaxHomeValueYouCanBePreApprovedFor).toFixed(2)}$`,
-      value2: `${Number(doubleMaxHomeValueYouCanBePreApprovedFor).toFixed(2)}$`,
+      value: singleMaxHomeValueYouCanBePreApprovedFor,
+      value2: doubleMaxHomeValueYouCanBePreApprovedFor,
     },
     {
       name: 'Mortgage For This Home',
-      value: `${Number(singleMortageForThisHome).toFixed(2)}$`,
-      value2: `${Number(doubleMortageForThisHome).toFixed(2)}$`,
+      value: singleMortageForThisHome,
+      value2: doubleMortageForThisHome,
     },
     {
       name: 'Additional Monthly Payments For This Home',
-      value: `${data.monthlyPaymentWPmi}$`,
-      value2: `${data.monthlyPaymentWPmi}$`,
+      value: data.monthlyPaymentWPmi,
+      value2: data.monthlyPaymentWPmi,
     },
     {
       name: 'Total Monthly Payments For This Home',
-      value: `${Number(singleTotalMonthlyPaymentsForThisHome).toFixed(2)}$`,
-      value2: `${Number(doubleTotalMonthlyPaymentsForThisHome).toFixed(2)}$`,
+      value: singleTotalMonthlyPaymentsForThisHome,
+      value2: doubleTotalMonthlyPaymentsForThisHome,
     },
     {
       name: 'Current Savings',
-      value: `${data.yourCurrentSavings}$`,
-      value2: `${data.yourCurrentSavings}$`,
+      value: data.yourCurrentSavings,
+      value2: data.yourCurrentSavings,
     },
     {
       name: '7c. Can You Make This Downpayment?',
@@ -138,13 +155,13 @@ const Summary = ({ data }: { data: Record<any, any> }) => {
     },
     {
       name: 'Reserves after Upfront Investment',
-      value: `${Number(singleReservesAfterUpfrontInvestment).toFixed(2)}$`,
-      value2: `${Number(doubleReservesAfterUpfrontInvestment).toFixed(2)}$`,
+      value: singleReservesAfterUpfrontInvestment,
+      value2: doubleReservesAfterUpfrontInvestment,
     },
     {
       name: '6 Months Reserves Would Be...',
-      value: `${Number(data.reserveRequirement * singleTotalMonthlyPaymentsForThisHome).toFixed(2)}$`,
-      value2: `${Number(data.reserveRequirement * doubleTotalMonthlyPaymentsForThisHome).toFixed(2)}$`,
+      value: data.reserveRequirement * singleTotalMonthlyPaymentsForThisHome,
+      value2: data.reserveRequirement * doubleTotalMonthlyPaymentsForThisHome,
     },
     {
       name: '# of Reserve Months',
@@ -161,49 +178,49 @@ const Summary = ({ data }: { data: Record<any, any> }) => {
 
   const rows = [
     { name: '1. Loan Terms', colSpan: 3, className: 'bg-grey-400 font-bold'},
-    { name: 'Home Price', value: `${data.homePrice}$`, colSpan: 2 },
+    { name: 'Home Price', value: data.homePrice, colSpan: 2 },
     { name: 'Downpayment (%)', value: `${data.downPaymentPercentage}%`, colSpan: 2 },
-    { name: 'Downpayment ($)', value: `${data.downPaymentAmount}$`, colSpan: 2 },
-    { name: 'Mortgage', value: `${data.mortgage}$`, colSpan: 2 },
+    { name: 'Downpayment ($)', value: data.downPaymentAmount, colSpan: 2 },
+    { name: 'Mortgage', value: data.mortgage, colSpan: 2 },
     { name: 'Interest Rate (per year)', value: `${data.interestRate}%`, colSpan: 2 },
-    { name: 'Terms (Years)', value: data.terms, colSpan: 2 },
-    { name: '# of Payments', value: data.numberOfPayments, colSpan: 2 },
-    { name: 'Mortgage Payment (Principal & Interest)', value: `${data.mortgagePayment}$`, colSpan: 2 },
+    { name: 'Terms (Years)', value: `${data.terms}`, colSpan: 2 },
+    { name: '# of Payments', value: `${data.numberOfPayments}`, colSpan: 2 },
+    { name: 'Mortgage Payment (Principal & Interest)', value: data.mortgagePayment, colSpan: 2 },
     { name: '2. Rent Revenues', colSpan: 3, className: 'bg-grey-400 font-bold'},
-    { name: 'Unit #1 Rent or Live In', value: `${data.rentLive}$`, colSpan: 2 },
-    { name: 'Unit #2 Rent', value: `${data.rent2}$`, colSpan: 2 },
-    { name: 'Unit #3 Rent', value: `${data.rent3}$`, colSpan: 2 },
-    { name: 'Unit #4 Rent', value: `${data.rent4}$`, colSpan: 2 },
-    { name: 'Other Revenue (w+d, prkg)', value: `${data.otherRevenue}$`, colSpan: 2 },
-    { name: 'Rent Revenues sum', value: `${data.rentSum}$`, colSpan: 2},
+    { name: 'Unit #1 Rent or Live In', value: data.rentLive, colSpan: 2 },
+    { name: 'Unit #2 Rent', value: data.rent2, colSpan: 2 },
+    { name: 'Unit #3 Rent', value: data.rent3, colSpan: 2 },
+    { name: 'Unit #4 Rent', value: data.rent4, colSpan: 2 },
+    { name: 'Other Revenue (w+d, prkg)', value: data.otherRevenue, colSpan: 2 },
+    { name: 'Rent Revenues sum', value: data.rentSum, colSpan: 2},
     { name: '2a. Financing Expense', colSpan: 3, className: 'bg-grey-400 font-bold'},
-    { name: 'Escrow: Taxes', value: `${data.escrowTaxes}$`, colSpan: 2},
-    { name: `Escrow: Homeowner's Insurance`, value: `${data.escrowHomeownersInsurance}$`, colSpan: 2},
-    { name: 'Escrow: Hazard Insurance', value: `${data.escrowHazardInsurance}$`, colSpan: 2},
-    { name: 'Monthly Payment w/o PMI', value: `${data.monthlyPaymentWoPMI}$`, colSpan: 2},
+    { name: 'Escrow: Taxes', value: data.escrowTaxes, colSpan: 2},
+    { name: `Escrow: Homeowner's Insurance`, value: data.escrowHomeownersInsurance, colSpan: 2},
+    { name: 'Escrow: Hazard Insurance', value: data.escrowHazardInsurance, colSpan: 2},
+    { name: 'Monthly Payment w/o PMI', value: data.monthlyPaymentWoPMI, colSpan: 2},
     { name: '3b. PMI', colSpan: 3, className: 'bg-grey-400 font-bold'},
     { name: 'PMI Expense (%)', value: `${data.pmiExpensePercentage}%`, colSpan: 2},
-    { name: 'PMI Expense ($)', value: `${data.pmiExpenseAmount}$`, colSpan: 2},
-    { name: 'Monthly Payment w/PMI', value: `${data.monthlyPaymentWPmi}$`, colSpan: 2},
-    { name: 'P.I.T.I. Principal Interest Taxes Insurance', value: `${data.PITI}$`, colSpan: 2},
+    { name: 'PMI Expense ($)', value: data.pmiExpenseAmount, colSpan: 2},
+    { name: 'Monthly Payment w/PMI', value: data.monthlyPaymentWPmi, colSpan: 2},
+    { name: 'P.I.T.I. Principal Interest Taxes Insurance', value: data.PITI, colSpan: 2},
     { name: '4. Debt-To-Income Ratios & Reserve Requirements', colSpan: 3, className: 'bg-grey-400 font-bold'},
     { name: 'Front-End Debt-To-Income Ratio by Banks', value: `${data.frontendDebtToIncomeRatioPercentage}%`, colSpan: 2},
     { name: 'Back-End Debt-To-Income Ratio by Banks', value: `${data.backendDebtToIncomeRatioPercentage}%`, colSpan: 2},
-    { name: 'Reserve Requirement (Months)', value: `${data.reserveRequirement}$`, colSpan: 2},
+    { name: 'Reserve Requirement (Months)', value: data.reserveRequirement, colSpan: 2},
     { name: 'Rent Revenue Adjustment By Banks', value: `${data.rentRevenueAdjustmentPercentage}%`, colSpan: 2},
-    { name: 'Additional Income For Affordability Calculation', value: `${data.additionalIncomeForAffordabilityCalculation}$`, colSpan: 2},
+    { name: 'Additional Income For Affordability Calculation', value: data.additionalIncomeForAffordabilityCalculation, colSpan: 2},
     { name: '5. Your Financial Situation', colSpan: 3, className: 'bg-grey-400 font-bold'},
-    { name: 'Your Current Rent', value: `${data.yourCurrentRent}$`, colSpan: 2},
-    { name: 'Your Current Annual Salary / Gross Income', value: `${data.yourCurrentAnnualSalary}$`, colSpan: 2},
-    { name: 'Monthly Gross Income', value: `${data.monthlyGrossIncome}$`, colSpan: 2},
-    { name: 'Your Current Savings', value: `${data.yourCurrentSavings}$`, colSpan: 2},
+    { name: 'Your Current Rent', value: data.yourCurrentRent, colSpan: 2},
+    { name: 'Your Current Annual Salary / Gross Income', value: data.yourCurrentAnnualSalary, colSpan: 2},
+    { name: 'Monthly Gross Income', value: data.monthlyGrossIncome, colSpan: 2},
+    { name: 'Your Current Savings', value: data.yourCurrentSavings, colSpan: 2},
     { name: '6. Monthly Debt Payments', colSpan: 3, className: 'bg-grey-400 font-bold'},
-    { name: 'First Home Monthly Mortgage Payment', value: `${data.firstHomeMonthlyMortgagePayment}$`, colSpan: 2},
-    { name: 'Student Loans Monthly Payment', value: `${data.studentLoansMonthlyPayment}$`, colSpan: 2},
-    { name: 'Car Note Monthly Payment', value: `${data.carNoteMonthlyPayment}$`, colSpan: 2},
-    { name: 'Credit Card Payments', value: `${data.creditCardPayments}$`, colSpan: 2},
-    { name: 'Other Debt Monthly Payment', value: `${data.otherDebtMonthlyPayment}$`, colSpan: 2},
-    { name: 'Monthly dept payments sum', value: `${data.totalMonthlyDebtPayments}$`, colSpan: 2},
+    { name: 'First Home Monthly Mortgage Payment', value: data.firstHomeMonthlyMortgagePayment, colSpan: 2},
+    { name: 'Student Loans Monthly Payment', value: data.studentLoansMonthlyPayment, colSpan: 2},
+    { name: 'Car Note Monthly Payment', value: data.carNoteMonthlyPayment, colSpan: 2},
+    { name: 'Credit Card Payments', value: data.creditCardPayments, colSpan: 2},
+    { name: 'Other Debt Monthly Payment', value: data.otherDebtMonthlyPayment, colSpan: 2},
+    { name: 'Monthly dept payments sum', value: data.totalMonthlyDebtPayments, colSpan: 2},
   ]
 
   return (
@@ -232,8 +249,20 @@ const Summary = ({ data }: { data: Record<any, any> }) => {
                 <TableCell className={className} component="th" scope="row">
                   {name}
                 </TableCell>
-                <TableCell className={className} align="right">{value}</TableCell>
-                <TableCell className={className} align="right">{value2}</TableCell>
+                <TableCell className={className} align="right">
+                  {['YES', 'NO'].includes(value) ? (
+                    <IconYesNo value={value} />
+                  ) : (
+                    typeof value === 'string' ? value : formatAmount(value)
+                  )}
+                </TableCell>
+                <TableCell className={className} align="right">
+                  {['YES', 'NO'].includes(value2) ? (
+                    <IconYesNo value={value2} />
+                  ) : (
+                    typeof value2 === 'string' ? value2 : formatAmount(value2)
+                  )}
+                </TableCell>
               </TableRow>
             ))}
             <TableRow>
@@ -241,19 +270,23 @@ const Summary = ({ data }: { data: Record<any, any> }) => {
                 Input
               </TableCell>
             </TableRow>
-            {rows.map(({ name, colSpan = 1, className, value = '' }) => (
-              <TableRow
-                key={name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell className={className} component="th" scope="row" colSpan={colSpan}>
-                  {name}
-                </TableCell>
-                {value && (
-                  <TableCell align="right">{value}</TableCell>
-                )}
-              </TableRow>
-            ))}
+            {rows.map(({ name, colSpan = 1, className, value = '' }) => {
+              return (
+                <TableRow
+                  key={name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell className={className} component="th" scope="row" colSpan={colSpan}>
+                    {name}
+                  </TableCell>
+                  {(!!value || value === 0) && (
+                    <TableCell align="right">
+                      {typeof value === 'string' ? value : formatAmount(value)}
+                    </TableCell>
+                  )}
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>

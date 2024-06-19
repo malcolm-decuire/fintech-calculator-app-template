@@ -52,13 +52,13 @@ const Pmi = ({ data, control }: ILoanTermsProps) => {
         name="pmiExpensePercentage"
       />
       <Box className="w-full md:w-calc-1/2-4">
-        <Input className="w-full" placeholder="PMI Expense ($)" value={`${data.pmiExpenseAmount}$`} />
+        <Input className="w-full" placeholder="PMI Expense ($)" value={`$${data.pmiExpenseAmount}`} />
       </Box>
       <Box className="w-full md:w-calc-1/2-4">
-        <Input className="w-full" placeholder="Monthly Payment w/PMI" value={`${data.monthlyPaymentWPmi}$`} />
+        <Input className="w-full" placeholder="Monthly Payment w/PMI" value={`$${data.monthlyPaymentWPmi}`} />
       </Box>
       <Box className="w-full md:w-calc-1/2-4">
-        <Input className="w-full" placeholder="P.I.T.I. Principal Interest Taxes Insurance" value={`${data.PITI}$`} />
+        <Input className="w-full" placeholder="P.I.T.I. Principal Interest Taxes Insurance" value={`$${data.PITI}`} />
       </Box>
     </Box>
   )
