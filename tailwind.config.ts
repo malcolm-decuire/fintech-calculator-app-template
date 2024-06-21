@@ -39,10 +39,13 @@ const config: Config = {
         },
         yellow: {
           500: '#ffcc02'
-        }
+        },
       },
       width: {
-        'calc-1/2-4': 'calc(50% - 12px)',
+        'calc-1/2-4': 'calc(50% - 12px)',    
+      },
+      maxWidth: {
+        '100vw-32px': 'calc(100vw - 32px)'
       },
       spacing: {
         '1': '6px',

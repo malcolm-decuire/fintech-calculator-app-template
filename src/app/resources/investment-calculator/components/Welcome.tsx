@@ -48,7 +48,7 @@ interface IWelcomeProps {
 
 const Welcome = ({ onStart }: IWelcomeProps) => {
   return (
-    <Box>
+    <Box className="">
       <Typography className="text-center font-medium" variant="h2">Investment Recommender</Typography>
       <Typography className="text-center text-black text-sm mt-2" variant="body1">
         You will need to finish the following questions to get your investment recommendation.

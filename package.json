@@ -1,5 +1,5 @@
 {
-  "name": "ablat",
+  "name": "fintech-calculator",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,9 +15,11 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.6.0",
+    "@iconify/react": "^5.0.1",
     "@mui/icons-material": "^5.15.19",
     "@mui/material": "^5.15.19",
     "financial": "^0.2.2",
+    "framer-motion": "^11.2.11",
     "graphql": "^16.8.1",
     "highcharts": "^11.4.3",
     "highcharts-pattern-fill": "^3.0.3",
@@ -28,6 +30,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
+    "tailwind-merge": "^2.3.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {

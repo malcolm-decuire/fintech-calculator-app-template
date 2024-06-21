@@ -151,10 +151,10 @@ const Calculator2 = () => {
   }
 
   return (
-    <Box className="p-7">
+    <Box className="w-[1200px] max-w-100vw-32px mx-auto">
       {flowMode === FlowMode.START && <Welcome onStart={() => setFlowMode(FlowMode.STEPPER)} />}
       {flowMode === FlowMode.STEPPER && (
-        <Box className="w-[1200px] max-w-full mx-auto overflow-auto">
+        <Box className="w-full mx-auto overflow-auto blat">
           <Stepper
             steps={steps}
             data={{ data }}

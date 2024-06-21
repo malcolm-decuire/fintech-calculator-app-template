@@ -84,8 +84,8 @@ const Home = () => {
   ];
 
   return (
-    <Box className="flex max-w-[860px] w-full mx-auto rounded-[25px] overflow-hidden">
-      <Box className="w-2/3 p-7 pt-50 flex flex-col gap-8">
+    <Box className="flex flex-col md:flex-row max-w-[860px] w-full mx-auto rounded-[25px] overflow-hidden">
+      <Box className="w-full md:w-2/3 p-7 pt-50 flex flex-col gap-8">
         <Typography className="text-center font-medium" variant="h2">How much rent can I afford?</Typography>
         {/* <Controller
           control={control}
@@ -97,14 +97,14 @@ const Home = () => {
           )}
           name="location"
         /> */}
-        <Box className="flex items-center justify-between gap-8">
+        <Box className="flex flex-col md:flex-row items-center justify-between gap-8">
           <Controller
             control={control}
             rules={{
               required: 'Must be completed',
             }}
             render={({ field, fieldState: { error } }) => (
-              <Input {...field} type="number" className="w-1/2" placeholder="Monthly Gross Income" error={error} />
+              <Input {...field} type="number" className="w-full md:w-1/2" placeholder="Monthly Gross Income" error={error} />
             )}
             name="monthlyGrossIncome"
           />
@@ -114,30 +114,30 @@ const Home = () => {
               required: 'Must be completed',
             }}
             render={({ field, fieldState: { error } }) => (
-              <Input {...field} type="number" className="w-1/2" placeholder="Monthly debts" error={error} />
+              <Input {...field} type="number" className="w-full md:w-1/2" placeholder="Monthly debts" error={error} />
             )}
             name="monthlyDebts"
           />
         </Box>
         {showAll && (
-          <Box className="flex items-center justify-between gap-8">
+          <Box className="flex flex-col md:flex-row items-center justify-between gap-8">
             <Controller
               control={control}
               render={({ field, fieldState: { error } }) => (
-                <Input {...field} type="number" className="w-1/2" placeholder="Monthly Savings" error={error} />
+                <Input {...field} type="number" className="w-full md:w-1/2" placeholder="Monthly Savings" error={error} />
               )}
               name="monthlySavings"
             />
             <Controller
               control={control}
               render={({ field, fieldState: { error } }) => (
-                <Input {...field} type="number" className="w-1/2" placeholder="Monthly Expenses" error={error} />
+                <Input {...field} type="number" className="w-full md:w-1/2" placeholder="Monthly Expenses" error={error} />
               )}
               name="monthlyExpenses"
             />
           </Box>
         )}
-        <Box className="flex w-full justify-end -mb-8">
+        <Box className="flex w-full justify-center md:justify-end -mb-8">
           <Button
             onClick={() => setShowAll(!showAll)}
             className="bg-grey-400 max-w-[160px] !text-black-500"
@@ -148,7 +148,7 @@ const Home = () => {
             }
           >More Options</Button>
         </Box>
-        <Button onClick={handleSubmit(onSubmit)} className="max-w-[160px] mx-auto">Calculate Rent</Button>
+        <Button onClick={handleSubmit(onSubmit)} className="max-w-[160px] mx-auto mt-8 md:mt-0">Calculate Rent</Button>
         <Typography className="text-center text-black text-sm" variant="body1">
           You can afford a ${renderRentAmount} rent in the US while spending {values.rent}% of your monthly income.
         </Typography>
@@ -175,7 +175,7 @@ const Home = () => {
         />
  
       </Box>
-      <Box className="w-1/3 items-start justify-center flex bg-gradient-to-r from-blue-100 to-blue-200">
+      <Box className="w-full md:w-1/3 items-start justify-center flex bg-gradient-to-r from-blue-100 to-blue-200">
         <Box className="w-[240px]">
           <Chart  
             data={data}
