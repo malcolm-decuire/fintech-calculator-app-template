@@ -118,11 +118,12 @@ const Calculator2 = () => {
   const downPaymentAmount = +Number(formValues.homePrice * (formValues.downPaymentPercentage / 100)).toFixed(2)
   const mortgage = formValues.homePrice - downPaymentAmount;
   const mortgagePayment = +Number(Math.abs(calculateMortgagePayment(formValues.interestRate / 100, numberOfPayments, mortgage))).toFixed(2);
-  const monthlyPaymentWoPMI = formValues.escrowTaxes + formValues.escrowHomeownersInsurance + formValues.escrowHazardInsurance;
+  const monthlyPaymentWoPMI = Number(formValues.escrowTaxes) + Number(formValues.escrowHomeownersInsurance) + Number(formValues.escrowHazardInsurance);
   const pmiExpenseAmount = +Number(+Number(Math.abs(calculateMortgagePayment((formValues.interestRate + formValues.pmiExpensePercentage) / 100, numberOfPayments, mortgage))).toFixed(2) - mortgagePayment).toFixed(2);
   const monthlyPaymentWPmi = +Number(monthlyPaymentWoPMI + pmiExpenseAmount).toFixed(2)
   const rentRevenueAdjustmentPercentage = 75;
-  const rentSum = formValues.rentLive + formValues.rent2 + formValues.rent3 + formValues.rent4;
+  const rentSum = Number(formValues.rentLive) + Number(formValues.rent2) + Number(formValues.rent3) + Number(formValues.rent4) + Number(formValues.otherRevenue);
+
   const data: IFormData = {
     ...formValues,
     rentSum,
@@ -142,11 +143,11 @@ const Calculator2 = () => {
     additionalIncomeForAffordabilityCalculation: (rentRevenueAdjustmentPercentage / 100) * rentSum,
     monthlyGrossIncome: +Number(formValues.yourCurrentAnnualSalary / 12).toFixed(2),
     totalMonthlyDebtPayments: (
-      formValues.firstHomeMonthlyMortgagePayment +
-      formValues.studentLoansMonthlyPayment +
-      formValues.carNoteMonthlyPayment +
-      formValues.creditCardPayments +
-      formValues.otherDebtMonthlyPayment
+      Number(formValues.firstHomeMonthlyMortgagePayment) +
+      Number(formValues.studentLoansMonthlyPayment) +
+      Number(formValues.carNoteMonthlyPayment) +
+      Number(formValues.creditCardPayments) +
+      Number(formValues.otherDebtMonthlyPayment)
     ),
   }
 
