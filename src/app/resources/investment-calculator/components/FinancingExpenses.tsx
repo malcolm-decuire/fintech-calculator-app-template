@@ -89,7 +89,7 @@ const FinancingExpenses = ({ data, control }: IFinancingExpensesProps) => {
         name="escrowHazardInsurance"
       />
       <Box className="w-full md:w-calc-1/2-4">
-        <Input className="w-full" placeholder="Terms (Years)" value={data.monthlyPaymentWoPMI} />
+        <Input className="w-full" placeholder="Monthly payments w/o PMI" value={data.monthlyPaymentWoPMI} />
       </Box>
     </Box>
   )

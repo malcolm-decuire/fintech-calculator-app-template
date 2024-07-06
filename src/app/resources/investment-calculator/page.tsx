@@ -12,6 +12,7 @@ import DeptToIncomeAndReserve, { IDeptToIncomeAndReserveCalculatedValues } from 
 import YourFinancialSituation, { IYourFinancialSituationCalculatedValues, IYourFinancialSituationFormValues } from './components/YourFinancialSituation';
 import MonthlyDeptPayments, { IMonthlyDeptPaymentsCalculatedValues, IMonthlyDeptPaymentsFormValues } from './components/MonthlyDeptPayments';
 import Summary from './components/Summary';
+import { pmt } from 'financial';
 
 const steps = [
   {
@@ -82,18 +83,18 @@ const defaultFormValues: IFormValues = {
   otherDebtMonthlyPayment: 5000,
 }
 
-function pmt(rate: number, nper: number, pv: number): number {
-  if (rate === 0) {
-      return -pv / nper;
-  }
-  const pvif = Math.pow(1 + rate, nper);
-  return -rate * pv * pvif / (pvif - 1);
-}
+// function pmt(rate: number, nper: number, pv: number): number {
+//   if (rate === 0) {
+//       return -pv / nper;
+//   }
+//   const pvif = Math.pow(1 + rate, nper);
+//   return -rate * pv * pvif / (pvif - 1);
+// }
 
-function calculateMortgagePayment(interestRate: number, numberOfPayments: number, mortgage: number): number {
-  const monthlyInterestRate = interestRate / 12;
-  return pmt(monthlyInterestRate, numberOfPayments, mortgage);
-}
+// function calculateMortgagePayment(interestRate: number, numberOfPayments: number, mortgage: number): number {
+//   const monthlyInterestRate = interestRate / 12;
+//   return pmt(monthlyInterestRate, numberOfPayments, mortgage);
+// }
 
 const numberOfPayments = 360;
 
@@ -117,9 +118,9 @@ const Calculator2 = () => {
   
   const downPaymentAmount = +Number(formValues.homePrice * (formValues.downPaymentPercentage / 100)).toFixed(2)
   const mortgage = formValues.homePrice - downPaymentAmount;
-  const mortgagePayment = +Number(Math.abs(calculateMortgagePayment(formValues.interestRate / 100, numberOfPayments, mortgage))).toFixed(2);
+  const mortgagePayment = +Number(pmt(formValues.interestRate / 100 / 12, numberOfPayments, mortgage) * -1).toFixed(2);
   const monthlyPaymentWoPMI = Number(formValues.escrowTaxes) + Number(formValues.escrowHomeownersInsurance) + Number(formValues.escrowHazardInsurance);
-  const pmiExpenseAmount = +Number(+Number(Math.abs(calculateMortgagePayment((formValues.interestRate + formValues.pmiExpensePercentage) / 100, numberOfPayments, mortgage))).toFixed(2) - mortgagePayment).toFixed(2);
+  const pmiExpenseAmount = +Number((pmt(((formValues.interestRate / 100) + (formValues.pmiExpensePercentage / 100)) / 12, numberOfPayments, mortgage) * -1) - (pmt(formValues.interestRate / 100 / 12, numberOfPayments, mortgage) * -1)).toFixed(2)
   const monthlyPaymentWPmi = +Number(monthlyPaymentWoPMI + pmiExpenseAmount).toFixed(2)
   const rentRevenueAdjustmentPercentage = 75;
   const rentSum = Number(formValues.rentLive) + Number(formValues.rent2) + Number(formValues.rent3) + Number(formValues.rent4) + Number(formValues.otherRevenue);
