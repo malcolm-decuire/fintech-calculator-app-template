@@ -83,19 +83,6 @@ const defaultFormValues: IFormValues = {
   otherDebtMonthlyPayment: 5000,
 }
 
-// function pmt(rate: number, nper: number, pv: number): number {
-//   if (rate === 0) {
-//       return -pv / nper;
-//   }
-//   const pvif = Math.pow(1 + rate, nper);
-//   return -rate * pv * pvif / (pvif - 1);
-// }
-
-// function calculateMortgagePayment(interestRate: number, numberOfPayments: number, mortgage: number): number {
-//   const monthlyInterestRate = interestRate / 12;
-//   return pmt(monthlyInterestRate, numberOfPayments, mortgage);
-// }
-
 const numberOfPayments = 360;
 
 enum FlowMode {
